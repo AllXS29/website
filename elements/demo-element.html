@@ -1,18 +1,19 @@
-<!-- welcome-elements.html -->
-<!-- import polymer for this element -->
-<!-- <link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="../bower_components/core-icons/core-icons.html">
-
-<polymer-element name="main-element" noscript>
-
-</polymer-element> -->
-<script src="../bower_components/webcomponentsjs/webcomponents.js"></script>
-  <link href="../bower_components/core-animated-pages/core-animated-pages.html" rel="import">
-<dom-module id="main-element">
+<!--
+    @license
+    Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
+    This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+    The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+    The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+    Code distributed by Google as part of the polymer project is also
+    subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<dom-module id="demo-element">
   <template>
 
     <style>
       .chip-container {
+        position: absolute;
+        top: 275px;
         right: 0;
         left: 0;
         text-align: center;
@@ -20,8 +21,7 @@
 
       .chip {
         display: inline-block;
-        width: 100%;
-        height: 20%;
+        position: relative;
         border-radius: 3px;
         margin: 4px;
         overflow: hidden;
@@ -30,16 +30,9 @@
         box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.16);
       }
 
-      .chip-small {
-      	  display: inline-block;
-        width: 30%; 
-        height: 20%;
-        border-radius: 3px;
-        margin: 4px;
-        overflow: hidden;
-        text-align: start;
-        background-color: #fff;
-        box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.16);
+      .chip-top {
+        width: 200px;
+        height: 200px;
       }
 
       .chip-bottom {
@@ -52,11 +45,11 @@
       }
 
       #details {
-        /*padding: 200px 10% 0;*/
+        padding: 200px 10% 0;
       }
 
       .card {
-        /*height: 400px;*/
+        height: 400px;
         border-radius: 3px;
         text-align: start;
         overflow: hidden;
@@ -92,7 +85,8 @@
 
           <template repeat="{{items as item}}">
 
-            <div class="chip" hero-id="{{item.artist}}-{{item.album}}" hero?="{{selectedAlbum === item }}" style="background: {{item.color}}">
+            <div class="chip" hero-id="{{item.artist}}-{{item.album}}" hero?="{{selectedAlbum === item }}">
+              <div class="chip-top" style="background:{{item.color}};" hero-id="{{item.artist}}-{{item.album}}-art" hero?="{{selectedAlbum === item}}"></div>
               <div class="chip-bottom">
                 <div class="chip-album-title">{{item.album}}</div>
                 <div class="chip-artist">{{item.artist}}</div>
@@ -106,7 +100,7 @@
 
       <section id="details">
 
-        <div class="card" layout horizontal hero-id="{{selectedAlbum.artist}}-{{selectedAlbum.album}}" hero on-tap="{{transition}}" style="height : {{height}}">
+        <div class="card" layout horizontal hero-id="{{selectedAlbum.artist}}-{{selectedAlbum.album}}" hero on-tap="{{transition}}">
           <div class="card-left" style="background:{{selectedAlbum.color}};" hero-id="{{selectedAlbum.artist}}-{{selectedAlbum.album}}-art" hero></div>
           <div class="card-right" flex>
             <div layout horizontal center>
@@ -123,26 +117,13 @@
 
       </section>
 
-		<section id="small">
-			<div class="chip-container" on-tap="{{transition}}">
-		     	<template repeat="{{items as item}}">
-			      	<div class="chip-small" layout horizontal hero-id="{{item.artist}}--{{item.album}}" hero?="{{selectedAlbum === item}}" style="background: {{item.color}}">
-			      		<div class="chip-bottom">
-			      			<div class="chip-album-title">{{item.album}}</div>
-		                	<div class="chip-artist">{{item.artist}}</div>
-			      		</div>
-			      	</div>
-		      	</template>
-		    </div>
-      	</section>
-
     </core-animated-pages>
-</template>
+
+  </template>
   <script>
 
-    Polymer('main-element', {
-      height: 0,
-      
+    Polymer('music-demo', {
+
       page: 0,
 
       items: [
@@ -155,9 +136,6 @@
       selectedAlbum: null,
 
       transition: function(e) {
-      	console.log("test");console.log(window.innerHeight);console.log(window.innerWidth);
-      	heigth = window.innerHeight - (2*(window.innerHeight/10));
-      	console.log(heigth);
         if (this.page === 0 && e.target.templateInstance.model.item) {
           this.selectedAlbum = e.target.templateInstance.model.item;
           this.page = 1;
@@ -168,4 +146,4 @@
     });
 
   </script>
-  </dom-module>
+</dom-module>
